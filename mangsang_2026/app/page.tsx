@@ -11,7 +11,7 @@ declare global {
 
 // --- 1. 데이터 정의 (모든 텍스트 포함) ---
 
-const KAKAO_JS_KEY = process.env.NEXT_PUBLIC_KAKAO_JS_KEY || "YOUR_KAKAO_JS_KEY";
+const KAKAO_JS_KEY = process.env.NEXT_PUBLIC_KAKAO_JS_KEY || "e83044bf41c6f1abb08e666366c3a43a";
 
 type CategoryId = 'muscle' | 'money' | 'love' | 'quit' | 'godlife';
 
@@ -165,7 +165,7 @@ export default function DelusionTest() {
   };
 
   const copyLink = () => {
-    navigator.clipboard.writeText(window.location.href);
+    navigator.clipboard.writeText('https://mangsang-2026.vercel.app');
     setShowToast(true);
     setTimeout(() => setShowToast(false), 2000);
   };
@@ -184,15 +184,15 @@ export default function DelusionTest() {
           title: `새해 망상 레벨: ${result.title}`,
           description: "내 망상 지수는 과연 몇 레벨일까? 지금 확인!",
           link: { 
-            mobileWebUrl: window.location.href, 
-            webUrl: window.location.href 
+            mobileWebUrl: 'https://mangsang-2026.vercel.app', 
+            webUrl: 'https://mangsang-2026.vercel.app' 
           },
         },
         buttons: [{ 
           title: '테스트 시작', 
           link: { 
-            mobileWebUrl: window.location.href, 
-            webUrl: window.location.href 
+            mobileWebUrl: 'https://mangsang-2026.vercel.app', 
+            webUrl: 'https://mangsang-2026.vercel.app' 
           } 
         }],
       });
@@ -239,7 +239,7 @@ export default function DelusionTest() {
               <button 
                 key={cat.id} 
                 onClick={() => {
-                  setCategory(cat as Category); 
+                  setCategory(cat as any); 
                   setQuizIdx(0); 
                   setScore(0); 
                   setStep('quiz');
