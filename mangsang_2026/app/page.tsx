@@ -257,48 +257,58 @@ export default function DelusionTest() {
         </div>
       )}
 
-      {/* 3. 질문 화면 */}
-      {step === 'quiz' && category && (
-        <div className="flex-1 p-6 flex flex-col">
-          <div className="mb-6">
-            <div className="w-full bg-gray-200 rounded-full h-2 mb-3">
-              <div 
-                className="bg-gradient-to-r from-pink-500 to-yellow-500 h-full rounded-full transition-all duration-300"
-                style={{ width: `${((quizIdx + 1) / 5) * 100}%` }}
-              ></div>
-            </div>
-            <div className="text-center">
-              <span className="bg-gray-900 text-white px-4 py-1.5 rounded-full text-xs font-bold tracking-wider">
-                Q {quizIdx + 1} / 5
-              </span>
-            </div>
-          </div>
+{/* 3. 질문 화면 */}
+{step === 'quiz' && category && (
+  <div className="flex-1 p-6 flex flex-col">
+    <div className="mb-6">
+      <div className="w-full bg-gray-200 rounded-full h-2 mb-3">
+        <div 
+          className="bg-gradient-to-r from-pink-500 to-yellow-500 h-full rounded-full transition-all duration-300"
+          style={{ width: `${((quizIdx + 1) / 5) * 100}%` }}
+        ></div>
+      </div>
+      <div className="text-center">
+        <span className="bg-gray-900 text-white px-4 py-1.5 rounded-full text-xs font-bold tracking-wider">
+          Q {quizIdx + 1} / 5
+        </span>
+      </div>
+    </div>
 
-          <h2 className="text-xl font-bold mb-8 break-keep leading-relaxed text-center text-gray-900">
-            &quot;{QUESTIONS[category.id][quizIdx].q}&quot;
-          </h2>
+    {/* 문항 텍스트에도 key를 주어 문항 변경 시 애니메이션 효과 유도 가능 */}
+    <h2 key={`q-${quizIdx}`} className="text-xl font-bold mb-8 break-keep leading-relaxed text-center text-gray-900 animate-fadeIn">
+      &quot;{QUESTIONS[category.id][quizIdx].q}&quot;
+    </h2>
 
-          <div className="grid gap-3 flex-1">
-            {QUESTIONS[category.id][quizIdx].a.map((ans, i) => (
-              <button 
-                key={i} 
-                onClick={() => {
-                  const points = [10, 50, 70, 99][i];
-                  setScore(score + points);
-                  if (quizIdx < 4) {
-                    setQuizIdx(quizIdx + 1);
-                  } else {
-                    setStep('result');
-                  }
-                }} 
-                className="p-4 bg-white border border-gray-200 rounded-xl font-semibold text-left text-gray-900 hover:bg-gray-50 hover:border-gray-300 active:scale-98 transition-all leading-relaxed shadow-sm hover:shadow-md break-keep text-sm"
-              >
-                {ans}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
+    <div className="grid gap-3 flex-1">
+      {QUESTIONS[category.id][quizIdx].a.map((ans, i) => (
+        <button 
+          // 💡 핵심 수정: quizIdx를 key에 포함하여 문항 이동 시 버튼 상태 초기화
+          key={`ans-${quizIdx}-${i}`} 
+          onClick={(e) => {
+            const points = [10, 50, 70, 99][i];
+            setScore(score + points);
+            
+            // 클릭 후 포커스를 강제로 해제하여 모바일 잔상 방지
+            (e.currentTarget as HTMLButtonElement).blur();
+
+            if (quizIdx < 4) {
+              setQuizIdx(quizIdx + 1);
+              // 문항 변경 시 최상단으로 스크롤 (문항이 길 경우 대비)
+              window.scrollTo(0, 0);
+            } else {
+              setStep('result');
+            }
+          }} 
+          // 💡 Tailwind 팁: hover:는 PC에서만 작동하게 하려면 'hover:can-hover' 등을 설정할 수 있으나, 
+          // 여기서는 key 변경과 blur() 처리만으로도 모바일 색상 중복 문제는 해결됩니다.
+          className="p-4 bg-white border border-gray-200 rounded-xl font-semibold text-left text-gray-900 hover:bg-gray-50 hover:border-gray-300 active:bg-gray-100 active:scale-95 transition-all leading-relaxed shadow-sm break-keep text-sm outline-none"
+        >
+          {ans}
+        </button>
+      ))}
+    </div>
+  </div>
+)}
 
       {/* 4. 결과 화면 */}
       {step === 'result' && category && (
