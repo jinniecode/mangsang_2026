@@ -239,7 +239,7 @@ export default function DelusionTest() {
               <button 
                 key={cat.id} 
                 onClick={() => {
-                  setCategory(cat); 
+                  setCategory(cat as Category); 
                   setQuizIdx(0); 
                   setScore(0); 
                   setStep('quiz');
