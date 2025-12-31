@@ -184,15 +184,15 @@ export default function DelusionTest() {
           title: `새해 망상 레벨: ${result.title}`,
           description: "내 망상 지수는 과연 몇 레벨일까? 지금 확인!",
           link: { 
-            mobileWebUrl: window.location.href, 
-            webUrl: window.location.href 
+            mobileWebUrl: 'https://mangsang-2026.vercel.app', 
+            webUrl: 'https://mangsang-2026.vercel.app' 
           },
         },
         buttons: [{ 
           title: '테스트 시작', 
           link: { 
-            mobileWebUrl: window.location.href, 
-            webUrl: window.location.href 
+            mobileWebUrl: 'https://mangsang-2026.vercel.app', 
+            webUrl: 'https://mangsang-2026.vercel.app' 
           } 
         }],
       });
