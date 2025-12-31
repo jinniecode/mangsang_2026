@@ -11,7 +11,7 @@ declare global {
 
 // --- 1. 데이터 정의 (모든 텍스트 포함) ---
 
-const KAKAO_JS_KEY = process.env.NEXT_PUBLIC_KAKAO_JS_KEY || "YOUR_KAKAO_JS_KEY";
+const KAKAO_JS_KEY = process.env.NEXT_PUBLIC_KAKAO_JS_KEY || "203ef9e6613c1e84a888fbf05b814fab";
 
 type CategoryId = 'muscle' | 'money' | 'love' | 'quit' | 'godlife';
 
