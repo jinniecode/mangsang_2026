@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { GoogleTagManager } from '@next/third-parties/google';
 
 export const metadata: Metadata = {
   title: '새해 망상 레벨 테스트',
@@ -23,6 +24,7 @@ export default function RootLayout({
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
       </head>
+      <GoogleTagManager gtmId="GTM-55BC96LR" />
       <body className="font-handwriting">{children}</body>
     </html>
   )
