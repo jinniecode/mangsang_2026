@@ -275,9 +275,10 @@ export default function DelusionTest() {
         </div>
       )}
 
-{/* 3. 질문 화면 */}
+{/* 3. 질문 화면 (전체 복사해서 덮어쓰기 하세요) */}
       {step === 'quiz' && category && (
         <div className="flex-1 p-6 flex flex-col">
+          {/* 상단 프로그레스 바 영역 */}
           <div className="mb-6">
             <div className="w-full bg-gray-200 rounded-full h-2 mb-3">
               <div 
@@ -292,29 +293,36 @@ export default function DelusionTest() {
             </div>
           </div>
 
+          {/* 질문 텍스트: key를 부여해 질문이 바뀔 때마다 새로 렌더링되게 합니다. */}
           <h2 key={`q-${quizIdx}`} className="text-xl font-bold mb-8 break-keep leading-relaxed text-center text-gray-900">
             &quot;{QUESTIONS[category.id][quizIdx].q}&quot;
           </h2>
 
+          {/* 보기 버튼 리스트 */}
           <div className="grid gap-3 flex-1">
-            {/* 💡 수정: 원본 QUESTIONS 대신 shuffledOptions를 맵핑 */}
             {shuffledOptions.map((opt, i) => (
               <button 
-                key={`ans-${quizIdx}-${i}`} 
+                // 💡 아이폰 잔상 해결의 핵심: quizIdx와 옵션 텍스트를 조합한 고유 Key
+                key={`ans-${quizIdx}-${opt.text}`} 
                 onClick={(e) => {
-                  // 💡 수정: opt에 저장된 고유 점수를 사용
                   setScore(score + opt.points);
                   
+                  // 💡 아이폰 잔상 해결의 핵심: 클릭 직후 포커스를 강제로 해제
                   (e.currentTarget as HTMLButtonElement).blur();
 
                   if (quizIdx < 4) {
                     setQuizIdx(quizIdx + 1);
+                    // 다음 질문으로 넘어갈 때 페이지 최상단으로 스크롤
                     window.scrollTo(0, 0);
                   } else {
                     setStep('result');
                   }
                 }} 
-                className="p-4 bg-white border border-gray-200 rounded-xl font-semibold text-left text-gray-900 hover:bg-gray-50 hover:border-gray-300 active:bg-gray-100 active:scale-95 transition-all leading-relaxed shadow-sm break-keep text-sm outline-none"
+                // 💡 아이폰 잔상 해결의 핵심: hover는 md(PC)에서만, 모바일은 active(터치 중) 효과 사용
+                className="p-4 bg-white border border-gray-200 rounded-xl font-semibold text-left text-gray-900 
+                           md:hover:bg-gray-50 md:hover:border-gray-300 
+                           active:bg-pink-50 active:border-pink-200 
+                           transition-colors leading-relaxed shadow-sm break-keep text-sm outline-none"
               >
                 {opt.text}
               </button>
