@@ -165,7 +165,7 @@ export default function DelusionTest() {
   };
 
   const copyLink = () => {
-    navigator.clipboard.writeText(window.location.href);
+    navigator.clipboard.writeText('https://mangsang-2026.vercel.app');
     setShowToast(true);
     setTimeout(() => setShowToast(false), 2000);
   };
