@@ -10,7 +10,7 @@ declare global {
   }
 }
 
-// --- 1. 데이터 정의 (모든 텍스트 포함) ---
+// --- 1. 데이터 정의 ---
 
 const KAKAO_JS_KEY = process.env.NEXT_PUBLIC_KAKAO_JS_KEY || "e83044bf41c6f1abb08e666366c3a43a";
 
@@ -23,7 +23,7 @@ interface Category {
   color: string;
 }
 
-const CATEGORIES = [
+const CATEGORIES: Category[] = [
   { id: 'muscle', name: '근육뿜뿜 망상', icon: '💪', color: 'bg-rose-50' },
   { id: 'money', name: '돈벼락 망상', icon: '💰', color: 'bg-yellow-50' },
   { id: 'love', name: '연애성공 망상', icon: '❤️', color: 'bg-pink-50' },
@@ -110,20 +110,15 @@ export default function DelusionTest() {
   const [quizIdx, setQuizIdx] = useState(0);
   const [score, setScore] = useState(0);
   const [showToast, setShowToast] = useState(false);
-  
-  // 💡 추가: 현재 질문의 섞인 보기들을 저장하는 상태
   const [shuffledOptions, setShuffledOptions] = useState<{text: string, points: number}[]>([]);
 
-  // 💡 추가: 질문이 바뀔 때마다 보기를 랜덤하게 섞는 로직
   useEffect(() => {
     if (step === 'quiz' && category) {
       const currentQuestion = QUESTIONS[category.id][quizIdx];
-      // 텍스트와 점수를 매핑
       const optionsWithPoints = currentQuestion.a.map((text, index) => ({
         text,
         points: [10, 50, 70, 99][index]
       }));
-      // 랜덤하게 섞기
       const shuffled = [...optionsWithPoints].sort(() => Math.random() - 0.5);
       setShuffledOptions(shuffled);
     }
@@ -152,33 +147,12 @@ export default function DelusionTest() {
   };
 
   const getResultEmoji = (result: any) => {
-    // 대괄호 제목(sub)에 맞는 이모지 매핑
     const emojiMap: Record<string, string> = {
-      // muscle
-      '[침대 부착형 생물]': '🛏️',
-      '[아가리 파이터]': '💬',
-      '[걸어 다니는 종합병원]': '🏥',
-      '[상상 속 올림피아 챔피언]': '🏆',
-      // money
-      '[강제 무소유 실천가]': '🧘',
-      '[결제 버튼 공포증 환자]': '😰',
-      '[한강 수온 체크 전문가]': '🌊',
-      '[일론 머스크 숨겨진 자식]': '🚀',
-      // love
-      '[모태 솔로계의 시조새]': '🦕',
-      '[방구석 연애 코치]': '📺',
-      '[급발진 폭주 기관차]': '🚂',
-      '[프로 김칫국 드링커]': '🥤',
-      // quit
-      '[영혼 없는 사무실 지박령]': '👻',
-      '[말로만 파이어족]': '🔥',
-      '[상상 속 창업 신화 주인공]': '💼',
-      '[세계관 최강자 언더커버 보스]': '👑',
-      // godlife
-      '[프로 와식 생활러]': '🛋️',
-      '[문구점 VIP 호갱님]': '✏️',
-      '[스케줄 강박증 환자]': '⏰',
-      '[방구석 갓생 도인]': '🧘‍♂️',
+      '[침대 부착형 생물]': '🛏️', '[아가리 파이터]': '💬', '[걸어 다니는 종합병원]': '🏥', '[상상 속 올림피아 챔피언]': '🏆',
+      '[강제 무소유 실천가]': '🧘', '[결제 버튼 공포증 환자]': '😰', '[한강 수온 체크 전문가]': '🌊', '[일론 머스크 숨겨진 자식]': '🚀',
+      '[모태 솔로계의 시조새]': '🦕', '[방구석 연애 코치]': '📺', '[급발진 폭주 기관차]': '🚂', '[프로 김칫국 드링커]': '🥤',
+      '[영혼 없는 사무실 지박령]': '👻', '[말로만 파이어족]': '🔥', '[상상 속 창업 신화 주인공]': '💼', '[세계관 최강자 언더커버 보스]': '👑',
+      '[프로 와식 생활러]': '🛋️', '[문구점 VIP 호갱님]': '✏️', '[스케줄 강박증 환자]': '⏰', '[방구석 갓생 도인]': '🧘‍♂️',
     };
     return emojiMap[result.sub] || '🥴';
   };
@@ -194,7 +168,6 @@ export default function DelusionTest() {
       alert('카카오톡 공유 기능을 사용할 수 없습니다.');
       return;
     }
-    
     const result = getResult();
     try {
       window.Kakao.Share.sendDefault({
@@ -202,73 +175,34 @@ export default function DelusionTest() {
         content: {
           title: `새해 망상 레벨: ${result.title}`,
           description: "내 망상 지수는 과연 몇 레벨일까? 지금 확인!",
-          link: { 
-            mobileWebUrl: 'https://mangsang-2026.vercel.app', 
-            webUrl: 'https://mangsang-2026.vercel.app' 
-          },
+          link: { mobileWebUrl: 'https://mangsang-2026.vercel.app', webUrl: 'https://mangsang-2026.vercel.app' },
         },
-        buttons: [{ 
-          title: '테스트 시작', 
-          link: { 
-            mobileWebUrl: 'https://mangsang-2026.vercel.app', 
-            webUrl: 'https://mangsang-2026.vercel.app' 
-          } 
-        }],
+        buttons: [{ title: '테스트 시작', link: { mobileWebUrl: 'https://mangsang-2026.vercel.app', webUrl: 'https://mangsang-2026.vercel.app' } }],
       });
     } catch (error) {
       console.error('카카오톡 공유 오류:', error);
-      alert('공유하기에 실패했습니다. 카카오톡 개발자 센터에서 도메인 등록을 확인해주세요.');
     }
   };
 
   return (
     <div className="max-w-md mx-auto min-h-screen bg-gradient-to-b from-gray-50 to-white flex flex-col font-handwriting relative overflow-hidden">
       
-      {/* 1. 소개 화면 */}
       {step === 'intro' && (
         <div className="flex-1 flex flex-col items-center justify-center p-6 text-center">
-          <p className="bg-pink-100 px-4 py-2 text-xs font-bold text-gray-700 rounded-full mb-6 border border-pink-200">
-            작년에도 그 소리 하셨죠?
-          </p>
-          <h1 className="text-4xl font-black mb-6 tracking-tight leading-tight text-gray-900">
-            <span className="text-pink-500">새해 망상</span><br/><span>레벨</span> 테스트
-          </h1>
-          <div className="relative mb-10">
-            <div className="relative w-32 h-32 bg-gradient-to-br from-pink-100 to-yellow-100 rounded-full flex items-center justify-center text-7xl overflow-hidden shadow-lg">
-              🐣
-            </div>
-          </div>
-          <button 
-            onClick={() => setStep('category')} 
-            className="w-full py-4 bg-gray-900 text-white text-lg font-bold rounded-xl shadow-lg hover:bg-gray-800 active:scale-98 transition-all"
-          >
-            내 망상 레벨 테스트하기
-          </button>
+          <p className="bg-pink-100 px-4 py-2 text-xs font-bold text-gray-700 rounded-full mb-6 border border-pink-200">작년에도 그 소리 하셨죠?</p>
+          <h1 className="text-4xl font-black mb-6 tracking-tight leading-tight text-gray-900"><span className="text-pink-500">새해 망상</span><br/><span>레벨</span> 테스트</h1>
+          <div className="relative mb-10"><div className="w-32 h-32 bg-gradient-to-br from-pink-100 to-yellow-100 rounded-full flex items-center justify-center text-7xl shadow-lg">🐣</div></div>
+          <button onClick={() => setStep('category')} className="w-full py-4 bg-gray-900 text-white text-lg font-bold rounded-xl shadow-lg hover:bg-gray-800 active:scale-95 transition-all">내 망상 레벨 테스트하기</button>
         </div>
       )}
 
-      {/* 2. 카테고리 선택 */}
       {step === 'category' && (
         <div className="flex-1 p-6">
-          <h2 className="text-2xl font-black text-center mt-8 mb-8 text-gray-900 break-keep">
-            올해는 어떤 망상에<br/>절여져 있나요?
-          </h2>
+          <h2 className="text-2xl font-black text-center mt-8 mb-8 text-gray-900 break-keep">올해는 어떤 망상에<br/>절여져 있나요?</h2>
           <div className="grid gap-3">
             {CATEGORIES.map(cat => (
-              <button 
-                key={cat.id} 
-                onClick={() => {
-                  setCategory(cat as any); 
-                  setQuizIdx(0); 
-                  setScore(0); 
-                  setStep('quiz');
-                }} 
-                className={`flex items-center justify-between p-5 ${cat.color} border border-gray-200 rounded-2xl shadow-sm hover:shadow-md active:scale-98 transition-all text-left`}
-              >
-                <div className="flex items-center">
-                  <span className="text-3xl mr-4">{cat.icon}</span>
-                  <span className="text-lg font-bold text-gray-900">{cat.name}</span>
-                </div>
+              <button key={cat.id} onClick={() => { setCategory(cat); setQuizIdx(0); setScore(0); setStep('quiz'); }} className={`flex items-center justify-between p-5 ${cat.color} border border-gray-200 rounded-2xl shadow-sm hover:shadow-md active:scale-95 transition-all text-left`}>
+                <div className="flex items-center"><span className="text-3xl mr-4">{cat.icon}</span><span className="text-lg font-bold text-gray-900">{cat.name}</span></div>
                 <span className="text-gray-400">→</span>
               </button>
             ))}
@@ -276,55 +210,16 @@ export default function DelusionTest() {
         </div>
       )}
 
-{/* 3. 질문 화면 (전체 복사해서 덮어쓰기 하세요) */}
       {step === 'quiz' && category && (
         <div className="flex-1 p-6 flex flex-col">
-          {/* 상단 프로그레스 바 영역 */}
           <div className="mb-6">
-            <div className="w-full bg-gray-200 rounded-full h-2 mb-3">
-              <div 
-                className="bg-gradient-to-r from-pink-500 to-yellow-500 h-full rounded-full transition-all duration-300"
-                style={{ width: `${((quizIdx + 1) / 5) * 100}%` }}
-              ></div>
-            </div>
-            <div className="text-center">
-              <span className="bg-gray-900 text-white px-4 py-1.5 rounded-full text-xs font-bold tracking-wider">
-                Q {quizIdx + 1} / 5
-              </span>
-            </div>
+            <div className="w-full bg-gray-200 rounded-full h-2 mb-3"><div className="bg-gradient-to-r from-pink-500 to-yellow-500 h-full rounded-full transition-all duration-300" style={{ width: `${((quizIdx + 1) / 5) * 100}%` }}></div></div>
+            <div className="text-center"><span className="bg-gray-900 text-white px-4 py-1.5 rounded-full text-xs font-bold tracking-wider">Q {quizIdx + 1} / 5</span></div>
           </div>
-
-          {/* 질문 텍스트: key를 부여해 질문이 바뀔 때마다 새로 렌더링되게 합니다. */}
-          <h2 key={`q-${quizIdx}`} className="text-xl font-bold mb-8 break-keep leading-relaxed text-center text-gray-900">
-            &quot;{QUESTIONS[category.id][quizIdx].q}&quot;
-          </h2>
-
-          {/* 보기 버튼 리스트 */}
+          <h2 key={`q-${quizIdx}`} className="text-xl font-bold mb-8 break-keep leading-relaxed text-center text-gray-900">&quot;{QUESTIONS[category.id][quizIdx].q}&quot;</h2>
           <div className="grid gap-3 flex-1">
-            {shuffledOptions.map((opt, i) => (
-              <button 
-                // 💡 아이폰 잔상 해결의 핵심: quizIdx와 옵션 텍스트를 조합한 고유 Key
-                key={`ans-${quizIdx}-${opt.text}`} 
-                onClick={(e) => {
-                  setScore(score + opt.points);
-                  
-                  // 💡 아이폰 잔상 해결의 핵심: 클릭 직후 포커스를 강제로 해제
-                  (e.currentTarget as HTMLButtonElement).blur();
-
-                  if (quizIdx < 4) {
-                    setQuizIdx(quizIdx + 1);
-                    // 다음 질문으로 넘어갈 때 페이지 최상단으로 스크롤
-                    window.scrollTo(0, 0);
-                  } else {
-                    setStep('result');
-                  }
-                }} 
-                // 💡 아이폰 잔상 해결의 핵심: hover는 md(PC)에서만, 모바일은 active(터치 중) 효과 사용
-                className="p-4 bg-white border border-gray-200 rounded-xl font-semibold text-left text-gray-900 
-                           md:hover:bg-gray-50 md:hover:border-gray-300 
-                           active:bg-pink-50 active:border-pink-200 
-                           transition-colors leading-relaxed shadow-sm break-keep text-sm outline-none"
-              >
+            {shuffledOptions.map((opt) => (
+              <button key={`ans-${quizIdx}-${opt.text}`} onClick={(e) => { setScore(score + opt.points); (e.currentTarget as HTMLButtonElement).blur(); if (quizIdx < 4) { setQuizIdx(quizIdx + 1); window.scrollTo(0, 0); } else { setStep('result'); } }} className="p-4 bg-white border border-gray-200 rounded-xl font-semibold text-left text-gray-900 md:hover:bg-gray-50 active:bg-pink-50 active:border-pink-200 transition-colors shadow-sm break-keep text-sm outline-none">
                 {opt.text}
               </button>
             ))}
@@ -332,39 +227,26 @@ export default function DelusionTest() {
         </div>
       )}
 
-      {/* 4. 결과 화면 */}
       {step === 'result' && category && (
-        <div className="flex-1 bg-white flex flex-col items-center p-6 pb-24 overflow-y-auto">
-          <div className="mt-2 mb-4 bg-gradient-to-r from-pink-500 to-yellow-500 px-5 py-2 rounded-full font-bold text-white text-sm shadow-lg">
-            {category.name} 레벨
-          </div>
+        <div className="flex-1 bg-white flex flex-col items-center p-6 pb-12 overflow-y-auto">
+          <div className="mt-2 mb-4 bg-gradient-to-r from-pink-500 to-yellow-500 px-5 py-2 rounded-full font-bold text-white text-sm shadow-lg">{category.name} 레벨</div>
           {(() => {
             const result = getResult();
             const emoji = getResultEmoji(result);
             return (
               <>
-                <h2 className="text-2xl font-black text-center mb-6 leading-tight break-keep px-2 text-gray-900">
-                  Lv. {result.level} | {result.title}
-                </h2>
-                
+                <h2 className="text-2xl font-black text-center mb-6 leading-tight break-keep text-gray-900">Lv. {result.level} | {result.title}</h2>
                 <div className="w-full rounded-2xl p-5 bg-gradient-to-br from-gray-50 to-white mb-6 shadow-lg border border-gray-100">
-                  <div className="w-40 h-40 mx-auto bg-gradient-to-br from-pink-100 to-yellow-100 rounded-xl flex items-center justify-center text-7xl mb-4">
-                    {emoji}
-                  </div>
+                  <div className="w-40 h-40 mx-auto bg-gradient-to-br from-pink-100 to-yellow-100 rounded-xl flex items-center justify-center text-7xl mb-4">{emoji}</div>
                   <p className="text-center font-semibold text-gray-600 text-sm">{result.sub}</p>
                 </div>
-
                 <div className="w-full space-y-4 mb-8">
                   <div className="bg-gradient-to-br from-rose-50 to-pink-50 p-5 rounded-xl border border-rose-100 shadow-sm">
-                    <h4 className="font-bold text-rose-600 mb-3 text-base flex items-center gap-2">
-                      <span>⚡️</span> 팩트 폭격
-                    </h4>
+                    <h4 className="font-bold text-rose-600 mb-2 text-base flex items-center gap-2"><span>⚡️</span> 팩트 폭격</h4>
                     <p className="text-sm leading-relaxed break-keep text-gray-800">{result.fact}</p>
                   </div>
                   <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-5 rounded-xl border border-green-100 shadow-sm">
-                    <h4 className="font-bold text-green-600 mb-3 text-base flex items-center gap-2">
-                      <span>💊</span> 처방전
-                    </h4>
+                    <h4 className="font-bold text-green-600 mb-2 text-base flex items-center gap-2"><span>💊</span> 처방전</h4>
                     <p className="text-sm leading-relaxed break-keep text-gray-800">{result.pres}</p>
                   </div>
                 </div>
@@ -373,47 +255,22 @@ export default function DelusionTest() {
           })()}
           <AdFit />
           <div className="grid grid-cols-2 gap-3 w-full mb-4">
-            <button 
-              onClick={shareKakao} 
-              className="py-4 bg-[#FEE500] rounded-xl font-bold text-gray-900 shadow-md hover:shadow-lg active:scale-98 transition-all text-sm"
-            >
-              카톡 공유
-            </button>
-            <button 
-              onClick={copyLink} 
-              className="py-4 bg-gray-100 border border-gray-200 rounded-xl font-bold text-gray-900 shadow-sm hover:shadow-md active:scale-98 transition-all text-sm"
-            >
-              링크 복사
-            </button>
+            <button onClick={shareKakao} className="py-4 bg-[#FEE500] rounded-xl font-bold text-gray-900 shadow-md active:scale-95 transition-all text-sm">카톡 공유</button>
+            <button onClick={copyLink} className="py-4 bg-gray-100 border border-gray-200 rounded-xl font-bold text-gray-900 shadow-sm active:scale-95 transition-all text-sm">링크 복사</button>
           </div>
-          <button 
-            onClick={() => window.location.reload()} 
-            className="w-full py-4 bg-gray-900 text-white text-base font-bold rounded-xl shadow-lg hover:bg-gray-800 active:scale-98 transition-all"
-          >
-            다시 테스트하기
-          </button>
-          {/* ✅ 반드시 이 위치(결과 화면 div 닫히기 직전)에 넣으세요! */}
-          <footer className="w-full py-8 mt-auto border-t border-gray-100 text-center">
-                <button 
-                  onClick={() => window.location.href='/privacy'}
-                  className="text-[12px] text-gray-800 font-bold underline decoration-gray-300"
-                >
-                  개인정보 처리방침
-                </button>
-                <p className="text-[10px] text-gray-400 mt-2">© 2026 mangsang_2026</p>
-              </footer>
-              
-            </div> /* <--- 결과 화면 div 닫히는 지점 */
-          )}
+          <button onClick={() => window.location.reload()} className="w-full py-4 bg-gray-900 text-white text-base font-bold rounded-xl shadow-lg hover:bg-gray-800 active:scale-95 transition-all">다시 테스트하기</button>
+        </div>
+      )}
 
-{/* 5. 하단 푸터 (개인정보 처리방침 링크) */}
-<footer className="py-8 text-center">
+      {/* 공통 하단 푸터 */}
+      <footer className="py-8 text-center border-t border-gray-50 mt-auto">
         <button 
           onClick={() => window.location.href='/privacy'}
-          className="text-[10px] text-gray-400 underline decoration-gray-300 hover:text-gray-600 transition-colors"
+          className="text-[12px] text-gray-400 underline decoration-gray-200 hover:text-gray-600 transition-colors"
         >
           개인정보 처리방침
         </button>
+        <p className="text-[10px] text-gray-300 mt-2">© 2026 mangsang_2026</p>
       </footer>
 
       {showToast && (
