@@ -395,6 +395,16 @@ export default function DelusionTest() {
         </div>
       )}
 
+{/* 5. 하단 푸터 (개인정보 처리방침 링크) */}
+<footer className="py-8 text-center">
+        <button 
+          onClick={() => window.location.href='/privacy'}
+          className="text-[10px] text-gray-400 underline decoration-gray-300 hover:text-gray-600 transition-colors"
+        >
+          개인정보 처리방침
+        </button>
+      </footer>
+
       {showToast && (
         <div className="fixed bottom-20 left-1/2 -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full font-bold z-50 shadow-xl animate-bounce text-sm">
           링크 복사 완료! 🚀
