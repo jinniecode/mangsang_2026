@@ -392,16 +392,16 @@ export default function DelusionTest() {
           >
             다시 테스트하기
           </button>
-          {/* ✅ 1번 방법: 결과 화면 내부 전용 푸터 추가 */}
-          <footer className="mt-8 pb-4 text-center">
+                {/* ✅ 푸터를 '다시 하기' 버튼 바로 뒤, div가 닫히기 직전에 넣으세요 */}
+          <footer className="w-full py-6 mt-auto border-t border-gray-100 text-center">
             <button 
               onClick={() => window.location.href='/privacy'}
-              className="text-[10px] text-gray-400 underline decoration-gray-300"
+              className="text-[12px] text-gray-800 underline font-medium"
             >
               개인정보 처리방침
             </button>
           </footer>
-        </div> // 286번 줄 근처: 결과 화면 div가 닫히는 곳
+        </div> // 결과 화면 컨테이너 닫힘
       )}
 
 {/* 5. 하단 푸터 (개인정보 처리방침 링크) */}
