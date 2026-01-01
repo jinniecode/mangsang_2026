@@ -259,19 +259,32 @@ export default function DelusionTest() {
             <button onClick={copyLink} className="py-4 bg-gray-100 border border-gray-200 rounded-xl font-bold text-gray-900 shadow-sm active:scale-95 transition-all text-sm">링크 복사</button>
           </div>
           <button onClick={() => window.location.reload()} className="w-full py-4 bg-gray-900 text-white text-base font-bold rounded-xl shadow-lg hover:bg-gray-800 active:scale-95 transition-all">다시 테스트하기</button>
+
+          {/* ✅ 푸터를 결과 화면 스크롤 영역 안으로 이동 */}
+          <footer className="w-full py-12 mt-8 border-t border-gray-50 text-center">
+            <button 
+              onClick={() => window.location.href='/privacy'}
+              className="text-[12px] text-gray-400 underline decoration-gray-200 hover:text-gray-600 transition-colors"
+            >
+              개인정보 처리방침
+            </button>
+            <p className="text-[10px] text-gray-300 mt-2">© 2026 mangsang_2026</p>
+          </footer>
         </div>
       )}
 
-      {/* 공통 하단 푸터 */}
-      <footer className="py-8 text-center border-t border-gray-50 mt-auto">
-        <button 
-          onClick={() => window.location.href='/privacy'}
-          className="text-[12px] text-gray-400 underline decoration-gray-200 hover:text-gray-600 transition-colors"
-        >
-          개인정보 처리방침
-        </button>
-        <p className="text-[10px] text-gray-300 mt-2">© 2026 mangsang_2026</p>
-      </footer>
+      {/* Intro/Category 화면용 하단 푸터 */}
+      {(step === 'intro' || step === 'category') && (
+        <footer className="py-8 text-center border-t border-gray-50 mt-auto">
+          <button 
+            onClick={() => window.location.href='/privacy'}
+            className="text-[12px] text-gray-400 underline decoration-gray-200 hover:text-gray-600 transition-colors"
+          >
+            개인정보 처리방침
+          </button>
+          <p className="text-[10px] text-gray-300 mt-2">© 2026 mangsang_2026</p>
+        </footer>
+      )}
 
       {showToast && (
         <div className="fixed bottom-20 left-1/2 -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full font-bold z-50 shadow-xl animate-bounce text-sm">
