@@ -10,18 +10,11 @@ declare global {
   }
 }
 
-// --- 1. 데이터 정의 ---
-
+// --- 1. 데이터 정의 (생략 없이 포함) ---
 const KAKAO_JS_KEY = process.env.NEXT_PUBLIC_KAKAO_JS_KEY || "e83044bf41c6f1abb08e666366c3a43a";
 
 type CategoryId = 'muscle' | 'money' | 'love' | 'quit' | 'godlife';
-
-interface Category {
-  id: CategoryId;
-  name: string;
-  icon: string;
-  color: string;
-}
+interface Category { id: CategoryId; name: string; icon: string; color: string; }
 
 const CATEGORIES: Category[] = [
   { id: 'muscle', name: '근육뿜뿜 망상', icon: '💪', color: 'bg-rose-50' },
@@ -253,14 +246,20 @@ export default function DelusionTest() {
               </>
             );
           })()}
-          <AdFit />
+
+          {/* 버튼 영역 */}
           <div className="grid grid-cols-2 gap-3 w-full mb-4">
             <button onClick={shareKakao} className="py-4 bg-[#FEE500] rounded-xl font-bold text-gray-900 shadow-md active:scale-95 transition-all text-sm">카톡 공유</button>
             <button onClick={copyLink} className="py-4 bg-gray-100 border border-gray-200 rounded-xl font-bold text-gray-900 shadow-sm active:scale-95 transition-all text-sm">링크 복사</button>
           </div>
-          <button onClick={() => window.location.reload()} className="w-full py-4 bg-gray-900 text-white text-base font-bold rounded-xl shadow-lg hover:bg-gray-800 active:scale-95 transition-all">다시 테스트하기</button>
+          <button onClick={() => window.location.reload()} className="w-full py-4 bg-gray-900 text-white text-base font-bold rounded-xl shadow-lg hover:bg-gray-800 active:scale-95 transition-all mb-8">
+            다시 테스트하기
+          </button>
 
-          {/* ✅ 푸터를 결과 화면 스크롤 영역 안으로 이동 */}
+          {/* ✅ 광고 영역을 '다시 테스트하기' 버튼 밑으로 이동 */}
+          <AdFit />
+
+          {/* 결과 화면용 하단 푸터 */}
           <footer className="w-full py-12 mt-8 border-t border-gray-50 text-center">
             <button 
               onClick={() => window.location.href='/privacy'}
@@ -273,7 +272,7 @@ export default function DelusionTest() {
         </div>
       )}
 
-      {/* Intro/Category 화면용 하단 푸터 */}
+      {/* Intro/Category 화면용 하단 푸터 (공통 푸터 유지) */}
       {(step === 'intro' || step === 'category') && (
         <footer className="py-8 text-center border-t border-gray-50 mt-auto">
           <button 
