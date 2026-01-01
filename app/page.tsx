@@ -392,7 +392,16 @@ export default function DelusionTest() {
           >
             다시 테스트하기
           </button>
-        </div>
+          {/* ✅ 1번 방법: 결과 화면 내부 전용 푸터 추가 */}
+          <footer className="mt-8 pb-4 text-center">
+            <button 
+              onClick={() => window.location.href='/privacy'}
+              className="text-[10px] text-gray-400 underline decoration-gray-300"
+            >
+              개인정보 처리방침
+            </button>
+          </footer>
+        </div> // 286번 줄 근처: 결과 화면 div가 닫히는 곳
       )}
 
 {/* 5. 하단 푸터 (개인정보 처리방침 링크) */}
