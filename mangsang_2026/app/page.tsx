@@ -218,64 +218,68 @@ export default function DelusionTest() {
       )}
 
       {step === 'result' && category && (
-        <div className="flex-1 bg-white flex flex-col items-center p-6 pb-12 overflow-y-auto">
+        <div className="flex-1 bg-white flex flex-col items-center pb-12 overflow-y-auto">
           
-          {/* ✅ 결과페이지 상단 배너 (320x50) 추가 */}
-          <div className="mb-4">
-            <AdFit unit="DAN-5Z9kZtSOPQawYW0u" width="320" height="50" />
-          </div>
+          {/* ✅ 상단 광고: 패딩 없이 상단에 밀착 */}
+          <AdFit unit="DAN-5Z9kZtSOPQawYW0u" width="320" height="50" />
 
-          <div className="mt-2 mb-4 bg-gradient-to-r from-pink-500 to-yellow-500 px-5 py-2 rounded-full font-bold text-white text-sm shadow-lg">{category.name} 레벨</div>
-          {(() => {
-            const result = getResult();
-            const emoji = getResultEmoji(result);
-            return (
-              <>
-                <h2 className="text-2xl font-black text-center mb-6 leading-tight break-keep text-gray-900">Lv. {result.level} | {result.title}</h2>
-                <div className="w-full rounded-2xl p-5 bg-gradient-to-br from-gray-50 to-white mb-6 shadow-lg border border-gray-100">
-                  <div className="w-40 h-40 mx-auto bg-gradient-to-br from-pink-100 to-yellow-100 rounded-xl flex items-center justify-center text-7xl mb-4">{emoji}</div>
-                  <p className="text-center font-semibold text-gray-600 text-sm">{result.sub}</p>
-                </div>
-                <div className="w-full space-y-4 mb-8">
-                  <div className="bg-gradient-to-br from-rose-50 to-pink-50 p-5 rounded-xl border border-rose-100 shadow-sm">
-                    <h4 className="font-bold text-rose-600 mb-2 text-base flex items-center gap-2"><span>⚡️</span> 팩트 폭격</h4>
-                    <p className="text-sm leading-relaxed break-keep text-gray-800">{result.fact}</p>
+          {/* 내부 콘텐츠 영역 (p-6 패딩 유지) */}
+          <div className="w-full p-6 flex flex-col items-center">
+            <div className="mt-2 mb-4 bg-gradient-to-r from-pink-500 to-yellow-500 px-5 py-2 rounded-full font-bold text-white text-sm shadow-lg">
+              {category.name} 레벨
+            </div>
+
+            {(() => {
+              const result = getResult();
+              const emoji = getResultEmoji(result);
+              return (
+                <>
+                  <h2 className="text-2xl font-black text-center mb-6 leading-tight break-keep text-gray-900">Lv. {result.level} | {result.title}</h2>
+                  <div className="w-full rounded-2xl p-5 bg-gradient-to-br from-gray-50 to-white mb-6 shadow-lg border border-gray-100">
+                    <div className="w-40 h-40 mx-auto bg-gradient-to-br from-pink-100 to-yellow-100 rounded-xl flex items-center justify-center text-77xl mb-4">{emoji}</div>
+                    <p className="text-center font-semibold text-gray-600 text-sm">{result.sub}</p>
                   </div>
-                  <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-5 rounded-xl border border-green-100 shadow-sm">
-                    <h4 className="font-bold text-green-600 mb-2 text-base flex items-center gap-2"><span>💊</span> 처방전</h4>
-                    <p className="text-sm leading-relaxed break-keep text-gray-800">{result.pres}</p>
+                  <div className="w-full space-y-4 mb-8">
+                    <div className="bg-gradient-to-br from-rose-50 to-pink-50 p-5 rounded-xl border border-rose-100 shadow-sm">
+                      <h4 className="font-bold text-rose-600 mb-2 text-base flex items-center gap-2"><span>⚡️</span> 팩트 폭격</h4>
+                      <p className="text-sm leading-relaxed break-keep text-gray-800">{result.fact}</p>
+                    </div>
+                    <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-5 rounded-xl border border-green-100 shadow-sm">
+                      <h4 className="font-bold text-green-600 mb-2 text-base flex items-center gap-2"><span>💊</span> 처방전</h4>
+                      <p className="text-sm leading-relaxed break-keep text-gray-800">{result.pres}</p>
+                    </div>
                   </div>
-                </div>
-              </>
-            );
-          })()}
+                </>
+              );
+            })()}
 
-          {/* 버튼 영역 */}
-          <div className="grid grid-cols-2 gap-3 w-full mb-4">
-            <button onClick={shareKakao} className="py-4 bg-[#FEE500] rounded-xl font-bold text-gray-900 shadow-md active:scale-95 transition-all text-sm">카톡 공유</button>
-            <button onClick={copyLink} className="py-4 bg-gray-100 border border-gray-200 rounded-xl font-bold text-gray-900 shadow-sm active:scale-95 transition-all text-sm">링크 복사</button>
-          </div>
-          <button onClick={() => window.location.reload()} className="w-full py-4 bg-gray-900 text-white text-base font-bold rounded-xl shadow-lg hover:bg-gray-800 active:scale-95 transition-all mb-8">
-            다시 테스트하기
-          </button>
-
-          {/* ✅ 기존 하단 배너 (300x250) */}
-          <AdFit unit="DAN-Xp0kA4ImcKSQrg7f" width="300" height="250" />
-
-          {/* 결과 화면용 하단 푸터 */}
-          <footer className="w-full py-12 mt-8 border-t border-gray-50 text-center">
-            <button 
-              onClick={() => window.location.href='/privacy'}
-              className="text-[12px] text-gray-400 underline decoration-gray-200 hover:text-gray-600 transition-colors"
-            >
-              개인정보 처리방침
+            {/* 버튼 영역: mb-4 간격 적용 */}
+            <div className="grid grid-cols-2 gap-3 w-full mb-4">
+              <button onClick={shareKakao} className="py-4 bg-[#FEE500] rounded-xl font-bold text-gray-900 shadow-md active:scale-95 transition-all text-sm">카톡 공유</button>
+              <button onClick={copyLink} className="py-4 bg-gray-100 border border-gray-200 rounded-xl font-bold text-gray-900 shadow-sm active:scale-95 transition-all text-sm">링크 복사</button>
+            </div>
+            
+            {/* 다시 테스트하기: mb-4 간격으로 하단 배너와 동일하게 맞춤 */}
+            <button onClick={() => window.location.reload()} className="w-full py-4 bg-gray-900 text-white text-base font-bold rounded-xl shadow-lg hover:bg-gray-800 active:scale-95 transition-all mb-4">
+              다시 테스트하기
             </button>
-            <p className="text-[10px] text-gray-300 mt-2">© 2026 mangsang_2026</p>
-          </footer>
+
+            {/* ✅ 하단 광고: 상단 버튼과 동일한 mb-4 간격 유지 */}
+            <AdFit unit="DAN-Xp0kA4ImcKSQrg7f" width="300" height="250" />
+
+            <footer className="w-full py-12 mt-8 border-t border-gray-50 text-center">
+              <button 
+                onClick={() => window.location.href='/privacy'}
+                className="text-[12px] text-gray-400 underline decoration-gray-200 hover:text-gray-600 transition-colors"
+              >
+                개인정보 처리방침
+              </button>
+              <p className="text-[10px] text-gray-300 mt-2">© 2026 mangsang_2026</p>
+            </footer>
+          </div>
         </div>
       )}
 
-      {/* Intro/Category 화면용 하단 푸터 */}
       {(step === 'intro' || step === 'category') && (
         <footer className="py-8 text-center border-t border-gray-50 mt-auto">
           <button 
