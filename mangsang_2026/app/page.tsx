@@ -236,7 +236,7 @@ export default function DelusionTest() {
                 <>
                   <h2 className="text-2xl font-black text-center mb-6 leading-tight break-keep text-gray-900">Lv. {result.level} | {result.title}</h2>
                   <div className="w-full rounded-2xl p-5 bg-gradient-to-br from-gray-50 to-white mb-6 shadow-lg border border-gray-100">
-                    <div className="w-40 h-40 mx-auto bg-gradient-to-br from-pink-100 to-yellow-100 rounded-xl flex items-center justify-center text-77xl mb-4">{emoji}</div>
+                    <div className="w-40 h-40 mx-auto bg-gradient-to-br from-pink-100 to-yellow-100 rounded-xl flex items-center justify-center text-7xl mb-4">{emoji}</div>
                     <p className="text-center font-semibold text-gray-600 text-sm">{result.sub}</p>
                   </div>
                   <div className="w-full space-y-4 mb-8">
