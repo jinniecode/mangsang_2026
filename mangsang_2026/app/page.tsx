@@ -10,7 +10,6 @@ declare global {
   }
 }
 
-// --- 1. 데이터 정의 (생략 없이 포함) ---
 const KAKAO_JS_KEY = process.env.NEXT_PUBLIC_KAKAO_JS_KEY || "e83044bf41c6f1abb08e666366c3a43a";
 
 type CategoryId = 'muscle' | 'money' | 'love' | 'quit' | 'godlife';
@@ -94,8 +93,6 @@ const RESULTS = {
     { level: 99, title: "뇌내 망상으로 이미 우주 정복한 망상러", sub: "[방구석 갓생 도인]", fact: "명상만 하면 우주 지식이 뇌로 꽂힌다고 믿음. 행동은 안 하면서 긍정 확언만 만 번 외치는 도인. 입만 갓생임.", pres: "상상 속에서 성공하지 말고 지금 당장 책 1페이지만이라도 읽어라." },
   ]
 };
-
-// --- 2. 메인 컴포넌트 ---
 
 export default function DelusionTest() {
   const [step, setStep] = useState<'intro' | 'category' | 'quiz' | 'result'>('intro');
@@ -222,6 +219,12 @@ export default function DelusionTest() {
 
       {step === 'result' && category && (
         <div className="flex-1 bg-white flex flex-col items-center p-6 pb-12 overflow-y-auto">
+          
+          {/* ✅ 결과페이지 상단 배너 (320x50) 추가 */}
+          <div className="mb-4">
+            <AdFit unit="DAN-5Z9kZtSOPQawYW0u" width="320" height="50" />
+          </div>
+
           <div className="mt-2 mb-4 bg-gradient-to-r from-pink-500 to-yellow-500 px-5 py-2 rounded-full font-bold text-white text-sm shadow-lg">{category.name} 레벨</div>
           {(() => {
             const result = getResult();
@@ -256,8 +259,8 @@ export default function DelusionTest() {
             다시 테스트하기
           </button>
 
-          {/* ✅ 광고 영역을 '다시 테스트하기' 버튼 밑으로 이동 */}
-          <AdFit />
+          {/* ✅ 기존 하단 배너 (300x250) */}
+          <AdFit unit="DAN-Xp0kA4ImcKSQrg7f" width="300" height="250" />
 
           {/* 결과 화면용 하단 푸터 */}
           <footer className="w-full py-12 mt-8 border-t border-gray-50 text-center">
@@ -272,7 +275,7 @@ export default function DelusionTest() {
         </div>
       )}
 
-      {/* Intro/Category 화면용 하단 푸터 (공통 푸터 유지) */}
+      {/* Intro/Category 화면용 하단 푸터 */}
       {(step === 'intro' || step === 'category') && (
         <footer className="py-8 text-center border-t border-gray-50 mt-auto">
           <button 
