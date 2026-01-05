@@ -292,8 +292,9 @@ export default function DelusionTest() {
         </footer>
       )}
 
+{/* 토스트 메시지: 위치 및 레이어 순서 수정 */}
       {showToast && (
-        <div className="fixed bottom-20 left-1/2 -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full font-bold z-50 shadow-xl animate-bounce text-sm">
+        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 bg-gray-900/95 text-white px-6 py-3 rounded-full font-bold shadow-2xl animate-bounce text-sm whitespace-nowrap z-[9999] pointer-events-none backdrop-blur-sm">
           링크 복사 완료! 🚀
         </div>
       )}
