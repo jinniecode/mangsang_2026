@@ -292,12 +292,11 @@ export default function DelusionTest() {
         </footer>
       )}
 
-{/* 토스트 메시지: 위치 및 레이어 순서 수정 */}
+{/* 토스트 메시지: 레이어 분리로 중앙 정렬 충돌 해결 */}
       {showToast && (
-        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 bg-gray-900/95 text-white px-6 py-3 rounded-full font-bold shadow-2xl animate-bounce text-sm whitespace-nowrap z-[9999] pointer-events-none backdrop-blur-sm">
-          링크 복사 완료! 🚀
+        <div className="fixed bottom-12 inset-x-0 flex justify-center z-[9999] pointer-events-none">
+          <div className="bg-gray-900/95 text-white px-6 py-3 rounded-full font-bold shadow-2xl animate-bounce text-sm whitespace-nowrap backdrop-blur-sm pointer-events-auto">
+            링크 복사 완료! 🚀
+          </div>
         </div>
       )}
-    </div>
-  );
-}
