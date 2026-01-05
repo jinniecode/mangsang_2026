@@ -300,3 +300,6 @@ export default function DelusionTest() {
           </div>
         </div>
       )}
+    </div>
+  );
+}
