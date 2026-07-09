@@ -30,7 +30,7 @@ npm run dev
 yarn dev
 ```
 
-브라우저에서 [http://localhost:3000](http://localhost:3000)을 열어 확인하세요.
+브라우저에서 새해 망상 레벨 테스트(https://mangsang-2026.vercel.app/)을 열어 확인하세요.
 
 ## 📦 배포
 
